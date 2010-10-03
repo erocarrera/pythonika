@@ -8,8 +8,7 @@
 #
 #MATHLINKDIR = mldev32
 #MATHLINKDIR = DeveloperKit\Windows\CompilerAdditions\mldev32\
-MATHLINKDIR = c:\progra~1\Wolfra~1\Mathmatica\SystemFiles\Links\DeveloperKit\Windows\CompilerAdditions\mldev32\
-MATHLINKDIR = e:\Wolfra~1\Mathmatica\SystemFiles\Links\DeveloperKit\Windows\CompilerAdditions\mldev32\
+MATHLINKDIR = c:\progra~1\Wolfra~1\Mathematica\7.0\SystemFiles\Links\MathLink\DeveloperKit\Windows\CompilerAdditions\mldev32\
 
 
 # Modify the following for Python versions other than 2.7

@@ -1,7 +1,7 @@
 /*
     Pythonika 1.0 - Python Interpreter Interface for Mathematica.
     
-    Copyright (c) 2005-2009 Ero Carrera <ero@dkbza.org>
+    Copyright (c) 2005-2010 Ero Carrera <ero@dkbza.org>
 
     All rights reserved.
 
