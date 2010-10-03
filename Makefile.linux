@@ -1,0 +1,49 @@
+
+# Set the paths according to your MathLink Developer Kit location.
+# (The paths should not contain whitespaces)
+
+MATHEMATICA_INSTALL_DIR = /usr/local/Wolfram/Mathematica/7.0
+MLINKDIR = ${MATHEMATICA_INSTALL_DIR}/SystemFiles/Links/MathLink/DeveloperKit
+
+SYS = Linux
+CADDSDIR = ${MLINKDIR}/${SYS}/CompilerAdditions
+
+INCDIR = ${CADDSDIR}
+LIBDIR = ${CADDSDIR}
+
+MPREP = "${CADDSDIR}/mprep"
+MCC = "${CADDSDIR}/mcc"
+
+# Modify the following for Python versions other than 2.6
+PYTHON_VERSION_MAJOR = 2
+PYTHON_VERSION_MINOR = 6
+
+
+# Path to the Python includes (modify according to Python version)
+#
+PYTHONINC = /usr/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/
+
+
+PYTHONIKA = Pythonika
+INCLUDES = -I${INCDIR} -I${PYTHONINC}
+
+# libstdc++ and librt are, apparently, needed for correct compilation under Linux
+# with libMLi3 statically linked
+#
+LIBS = -L${LIBDIR} ${LIBDIR}/libML32i3.a -lstdc++ -lrt -lpython${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+
+all : Pythonika
+
+Pythonika: ${PYTHONIKA}.o ${PYTHONIKA}tm.o
+	${CC} ${INCLUDES} ${PYTHONIKA}.o ${PYTHONIKA}tm.o ${LIBS} -o ${PYTHONIKA}
+
+${PYTHONIKA}tm.o: ${PYTHONIKA}.tm
+	${MPREP} ${PYTHONIKA}.tm -o ${PYTHONIKA}tm.c
+	${CC} -c ${PYTHONIKA}tm.c ${INCLUDES}
+
+${PYTHONIKA}.o: ${PYTHONIKA}.c
+	${CC} -c ${PYTHONIKA}.c ${INCLUDES}
+
+clean :
+	rm -f ${PYTHONIKA}tm.* ${PYTHONIKA}.o ${PYTHONIKA}

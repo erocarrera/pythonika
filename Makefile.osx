@@ -1,0 +1,53 @@
+
+# Set the paths according to your MathLink Developer Kit location.
+# (The paths should not contain whitespaces)
+
+#MLINKDIR = ./mathematica/AddOns/MathLink/DeveloperKit
+MLINKDIR = /Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit
+
+#SYS = MacOSX-x86
+SYS =
+CADDSDIR = ${MLINKDIR}/${SYS}/CompilerAdditions
+
+INCDIR = ${CADDSDIR}
+LIBDIR = ${CADDSDIR}
+
+# Modify the following for Python versions other than 2.6
+PYTHON_VERSION_MAJOR = 2
+PYTHON_VERSION_MINOR = 6
+
+
+# Depending on your version of OSX the Python framework might be in /Library
+# instead of /System/Library (default for later OSX versions)
+
+#PYTHONFRAMEWORKDIR = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+PYTHONFRAMEWORKDIR = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+#PYTHONINC = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+PYTHONINC = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+OPTS = -DPYTHON${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}
+ 
+PYTHONIKA = Pythonika
+INCLUDES = -I${INCDIR} -I${PYTHONINC}
+LIBS = -L${LIBDIR} -lMLi3 -F${PYTHONFRAMEWORKDIR} -framework Python -F${LIBDIR} -framework mathlink
+MPREP = "${CADDSDIR}/mprep"
+MCC = "${CADDSDIR}/mcc"
+
+
+all : Pythonika
+
+
+Pythonika: ${PYTHONIKA}.o ${PYTHONIKA}tm.o
+	${CXX} ${INCLUDES} ${PYTHONIKA}.o ${PYTHONIKA}tm.o ${LIBS} -o ${PYTHONIKA}
+
+
+${PYTHONIKA}tm.o: ${PYTHONIKA}.tm
+	${MPREP} ${PYTHONIKA}.tm -o ${PYTHONIKA}tm.c
+	${CXX} -c ${PYTHONIKA}tm.c ${INCLUDES}
+
+${PYTHONIKA}.o: ${PYTHONIKA}.c
+	${CXX} ${OPTS} -c ${PYTHONIKA}.c ${INCLUDES}
+
+clean :
+	rm -f ${PYTHONIKA}tm.* ${PYTHONIKA}.o ${PYTHONIKA}
