@@ -17,20 +17,33 @@ PYTHON_VERSION_MAJOR = 2
 PYTHON_VERSION_MINOR = 6
 
 
+
 # Depending on your version of OSX the Python framework might be in /Library
 # instead of /System/Library (default for later OSX versions)
 
-#PYTHONFRAMEWORKDIR = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
 PYTHONFRAMEWORKDIR = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
-
-#PYTHONINC = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
 PYTHONINC = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+# For some older OSX systems:
+#
+#PYTHONFRAMEWORKDIR = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+#PYTHONINC = /Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+
+# For macports' Python
+#
+#PYTHONFRAMEWORKDIR = /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+#PYTHONINC = /opt/local/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+
+
+
 
 OPTS = -DPYTHON${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}
  
 PYTHONIKA = Pythonika
 INCLUDES = -I${INCDIR} -I${PYTHONINC}
-LIBS = -L${LIBDIR} -lMLi3 -F${PYTHONFRAMEWORKDIR} -framework Python -F${LIBDIR} -framework mathlink
+LIBS = -L${LIBDIR} -lMLi3 -F${PYTHONFRAMEWORKDIR} -framework Python -F${LIBDIR} -framework mathlink -framework CoreFoundation
 MPREP = "${CADDSDIR}/mprep"
 MCC = "${CADDSDIR}/mcc"
 
