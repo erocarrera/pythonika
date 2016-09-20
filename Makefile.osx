@@ -3,10 +3,10 @@
 # (The paths should not contain whitespaces)
 
 #MLINKDIR = ./mathematica/AddOns/MathLink/DeveloperKit
-MLINKDIR = /Applications/Mathematica.app/SystemFiles/Links/MathLink/DeveloperKit
+MLINKDIR = /Applications/Mathematica.app/Contents/SystemFiles/Links/MathLink/DeveloperKit
 
 #SYS = MacOSX-x86
-SYS =
+SYS = MacOSX-x86-64
 CADDSDIR = ${MLINKDIR}/${SYS}/CompilerAdditions
 
 INCDIR = ${CADDSDIR}
@@ -14,15 +14,18 @@ LIBDIR = ${CADDSDIR}
 
 # Modify the following for Python versions other than 2.6
 PYTHON_VERSION_MAJOR = 2
-PYTHON_VERSION_MINOR = 6
+PYTHON_VERSION_MINOR = 7
 
 
 
 # Depending on your version of OSX the Python framework might be in /Library
 # instead of /System/Library (default for later OSX versions)
 
-PYTHONFRAMEWORKDIR = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
-PYTHONINC = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+PYTHONFRAMEWORKDIR= /usr/local/Cellar/python/2.7.11/Frameworks
+PYTHONINC = ${PYTHONFRAMEWORKDIR}/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+
+# PYTHONFRAMEWORKDIR = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
+# PYTHONINC = /System/Library/Frameworks/Python.framework/Versions/${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/include/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}
 
 # For some older OSX systems:
 #
@@ -43,7 +46,7 @@ OPTS = -DPYTHON${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR}
  
 PYTHONIKA = Pythonika
 INCLUDES = -I${INCDIR} -I${PYTHONINC}
-LIBS = -L${LIBDIR} -lMLi3 -F${PYTHONFRAMEWORKDIR} -framework Python -F${LIBDIR} -framework mathlink -framework CoreFoundation
+LIBS = -L${LIBDIR} -lMLi4 -F${PYTHONFRAMEWORKDIR} -framework Python -framework CoreFoundation
 MPREP = "${CADDSDIR}/mprep"
 MCC = "${CADDSDIR}/mcc"
 
