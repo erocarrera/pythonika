@@ -101,7 +101,7 @@ void PyComplex(char const*name, double value, double value2)
 }
 
 
-void PyUnicodeString(char const*name, unsigned short const*value, long len)
+void PyUnicodeString(const char *name, const unsigned short *value, int len)
 {
     PyObject *obj;
     
@@ -406,7 +406,7 @@ void python_to_mathematica_object(PyObject *obj)
     }
 
     if(PyUnicode_Check(obj)) {
-        MLPutUnicodeString(stdlink,
+        MLPutUCS2String(stdlink,
             PyUnicode_AsUnicode(obj),
             PyUnicode_GetSize(obj) );
         return;
